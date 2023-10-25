@@ -1,55 +1,43 @@
 import React from "react";
 
 class AddUser extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      firstName: "",
-      lastName: "",
-      bio: "",
-      age: 1,
-      isHappy: false,
-    };
-  }
   render() {
+    const { user } = this.props;
     return (
       <form ref={(el) => (this.myForm = el)}>
         <input
-          placeholder="Имя"
-          onChange={(e) => this.setState({ firstName: e.target.value })}
+          placeholder="First Name"
+          onChange={(e) => this.setState({ first_name: e.target.value })}
         />
         <input
-          placeholder="Фамилия"
-          onChange={(e) => this.setState({ lastName: e.target.value })}
-        />
-        <textarea
-          placeholder="Биография"
-          onChange={(e) => this.setState({ bio: e.target.value })}
+          placeholder="Last Name"
+          onChange={(e) => this.setState({ last_name: e.target.value })}
         />
         <input
-          placeholder="Возраст"
-          onChange={(e) => this.setState({ age: e.target.value })}
+          placeholder="Email"
+          onChange={(e) => this.setState({ email: e.target.value })}
         />
-        <label htmlFor="isHappy">Счастлив?</label>
         <input
-          type="checkbox"
-          id="isHappy"
-          onChange={(e) => this.setState({ isHappy: e.target.checked })}
+          placeholder="Url on image"
+          onChange={(e) => this.setState({ avatar: e.target.value })}
         />
         <button
           type="button"
           onClick={() => {
-            this.myForm.reset()
-            this.props.onAdd({
-              firstName: this.state.firstName,
-              lastName: this.state.lastName,
-              bio: this.state.bio,
-              age: this.state.age,
-              isHappy: this.state.isHappy,
-            });
+            this.myForm.reset();
+            const userAdd = {
+              first_name: this.state.first_name,
+              last_name: this.state.last_name,
+              email: this.state.email,
+              avatar: this.state.avatar,
+            };
+            if (user) {
+              userAdd.id = user.id;
+            }
+            this.props.onAdd(userAdd);
           }}
         >
-          Добавить
+          Add
         </button>
       </form>
     );
